@@ -4,6 +4,9 @@ from transformers import AutoImageProcessor, AutoModelForObjectDetection
 import torch
 import os
 
+# import logging
+# logging.basicConfig(level=logging.ERROR)
+
 hf_token = os.getenv('HUGGING_FACE_ACCESS_TOKEN')
 
 # Title of the web application
