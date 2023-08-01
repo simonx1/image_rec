@@ -15,5 +15,27 @@ if uploaded_file is not None:
     st.write("")
     st.write("Classifying...")
     
-    # TODO: Send the image to Huggingface API and get the labels
-    # TODO: Display the image with labels
+    # Convert the image to a byte array
+    byte_arr = io.BytesIO()
+    image.save(byte_arr, format='JPEG')
+    byte_arr = byte_arr.getvalue()
+
+    # Encode the byte array in base64
+    base64_image = base64.b64encode(byte_arr).decode('utf-8')
+
+    # Send a POST request to the Huggingface API
+    response = requests.post(
+        'https://api-inference.huggingface.co/models/your-model-name',
+        headers={'Authorization': 'Bearer your-api-key'},
+        data=json.dumps({'inputs': base64_image})
+    )
+
+    # Check the status of the response
+    if response.status_code == 200:
+        # Extract the labels from the response
+        labels = response.json()[0]['label']
+
+        # Display the labels
+        st.write('Labels:', ', '.join(labels))
+    else:
+        st.write('Error:', response.text)
