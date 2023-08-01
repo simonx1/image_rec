@@ -10,7 +10,7 @@ hf_token = os.getenv('HUGGING_FACE_ACCESS_TOKEN')
 st.title('Object Recognition AI')
 
 # Upload the image
-uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg", "bmp"])
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
