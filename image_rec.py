@@ -19,8 +19,8 @@ if uploaded_file is not None:
     st.write("")
     st.write("Classifying...")
 
-    image_processor = AutoImageProcessor.from_pretrained("hustvl/yolos-base")
-    model = AutoModelForObjectDetection.from_pretrained("hustvl/yolos-base")
+    image_processor = AutoImageProcessor.from_pretrained("hustvl/yolos-base") # "hustvl/yolos-tiny"
+    model = AutoModelForObjectDetection.from_pretrained("hustvl/yolos-base") # "hustvl/yolos-tiny"
 
     inputs = image_processor(images=image, return_tensors="pt")
     outputs = model(**inputs)
