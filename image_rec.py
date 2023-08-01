@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import requests
 import io
 from transformers import AutoImageProcessor, AutoModelForObjectDetection
@@ -17,7 +17,6 @@ uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("")
     st.write("Classifying...")
 
@@ -33,9 +32,12 @@ if uploaded_file is not None:
         0
     ]
 
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default()
+
     for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
         box = [round(i, 2) for i in box.tolist()]
-        print(
-            f"Detected {model.config.id2label[label.item()]} with confidence "
-            f"{round(score.item(), 3)} at location {box}"
-        )
+        draw.rectangle(box, outline="red")
+        draw.text((box[0], box[1]), f"{model.config.id2label[label.item()]} {round(score.item(), 3)}", fill="red", font=font)
+
+    st.image(image, caption='Processed Image.', use_column_width=True)
