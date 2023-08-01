@@ -20,13 +20,6 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image.', use_column_width=True)
     st.write("")
     st.write("Classifying...")
-    
-    # # Convert the image to a byte array
-    # byte_arr = io.BytesIO()
-    # image.save(byte_arr, format='JPEG')
-
-    # Encode the byte array in base64
-    # base64_image = base64.b64encode(byte_arr).decode('utf-8')
 
     image_processor = AutoImageProcessor.from_pretrained("hustvl/yolos-tiny")
     model = AutoModelForObjectDetection.from_pretrained("hustvl/yolos-tiny")
@@ -46,17 +39,3 @@ if uploaded_file is not None:
             f"Detected {model.config.id2label[label.item()]} with confidence "
             f"{round(score.item(), 3)} at location {box}"
         )
-
-    # # Check the status of the response
-    # if response.status_code == 200:
-    #     # Extract the image from the response
-    #     base64_image = response.json()['image']
-
-    #     # Decode the base64 image
-    #     decoded_image = base64.b64decode(base64_image)
-    #     image = Image.open(io.BytesIO(decoded_image))
-
-    #     # Display the image with boxes and labels
-    #     st.image(image, caption='Image with identified objects.', use_column_width=True)
-    # else:
-    #     st.write('Error:', response.text)
