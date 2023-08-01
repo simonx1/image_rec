@@ -32,10 +32,14 @@ if uploaded_file is not None:
 
     # Check the status of the response
     if response.status_code == 200:
-        # Extract the labels from the response
-        labels = response.json()[0]['label']
+        # Extract the image from the response
+        base64_image = response.json()['image']
 
-        # Display the labels
-        st.write('Labels:', ', '.join(labels))
+        # Decode the base64 image
+        decoded_image = base64.b64decode(base64_image)
+        image = Image.open(io.BytesIO(decoded_image))
+
+        # Display the image with boxes and labels
+        st.image(image, caption='Image with identified objects.', use_column_width=True)
     else:
         st.write('Error:', response.text)
