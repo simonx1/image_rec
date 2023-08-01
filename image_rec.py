@@ -33,7 +33,7 @@ if uploaded_file is not None:
     ]
 
     draw = ImageDraw.Draw(image)
-    font = ImageFont.load_default()
+    font = ImageFont.truetype("arial.ttf", 15)
 
     for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
         box = [round(i, 2) for i in box.tolist()]
