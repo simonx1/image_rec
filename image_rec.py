@@ -1,10 +1,7 @@
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
-import requests
-import io
 from transformers import AutoImageProcessor, AutoModelForObjectDetection
 import torch
-import base64
 import os
 
 hf_token = os.getenv('HUGGING_FACE_ACCESS_TOKEN')
@@ -33,7 +30,7 @@ if uploaded_file is not None:
     ]
 
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 15)
+    font = ImageFont.load_default()
 
     for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
         box = [round(i, 2) for i in box.tolist()]
