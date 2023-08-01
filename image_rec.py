@@ -35,6 +35,10 @@ if uploaded_file is not None:
     font = ImageFont.load_default()
 
     for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
+        print(
+                f"Detected {model.config.id2label[label.item()]} with confidence "
+                f"{round(score.item(), 3)} at location {box}"
+            )
         box = [round(i, 2) for i in box.tolist()]
         draw.rectangle(box, outline="red")
         draw.text((box[0], box[1]), f"{model.config.id2label[label.item()]} {round(score.item(), 3)}", fill="red", font=font)
