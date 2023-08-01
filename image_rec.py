@@ -2,12 +2,9 @@ import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
 from transformers import AutoImageProcessor, AutoModelForObjectDetection
 import torch
-import os
 
 # import logging
 # logging.basicConfig(level=logging.ERROR)
-
-hf_token = os.getenv('HUGGING_FACE_ACCESS_TOKEN')
 
 # Title of the web application
 st.title('Object Recognition AI')
@@ -22,8 +19,8 @@ if uploaded_file is not None:
     st.write("")
     st.write("Classifying...")
 
-    image_processor = AutoImageProcessor.from_pretrained("hustvl/yolos-tiny")
-    model = AutoModelForObjectDetection.from_pretrained("hustvl/yolos-tiny")
+    image_processor = AutoImageProcessor.from_pretrained("hustvl/yolos-base")
+    model = AutoModelForObjectDetection.from_pretrained("hustvl/yolos-base")
 
     inputs = image_processor(images=image, return_tensors="pt")
     outputs = model(**inputs)
