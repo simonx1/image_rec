@@ -13,7 +13,9 @@ st.title('Object Recognition AI')
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg", "bmp"])
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_file).convert('RGB')
+    image.save('temp.jpeg', 'JPEG')
+    image = Image.open('temp.jpeg')
     st.write("")
     st.write("Classifying...")
 
